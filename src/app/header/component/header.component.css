@@ -1,0 +1,10 @@
+.bcp{
+    position: fixed;
+    height: 50px;
+    left: 30px;
+    top: 2px;
+    font-weight: bold;
+    font-size: 40px;
+    line-height: 64px;
+    color: #3a3737;
+}

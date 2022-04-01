@@ -1,0 +1,29 @@
+<div style="margin-left: 30px; padding-top: 50px;" class="my-3">
+    <h2>Stock Entry</h2>
+    <br/>  
+    <form #stockEntry = "ngForm" (ngSubmit) = "onClickSubmit(stockEntry.value)" >
+        <table>
+            <tr>
+                <td>
+                    <label>Plant</label>
+                </td>
+                <td>
+                    <input type = "text" name = "Plant" placeholder = "Plant" ngModel>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Storage Location</label>
+                </td>
+                <td>
+                    <input type = "text" name = "location" placeholder = "Storage Location" ngModel>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </td>
+            </tr>
+        </table>       
+    </form>
+ </div>
