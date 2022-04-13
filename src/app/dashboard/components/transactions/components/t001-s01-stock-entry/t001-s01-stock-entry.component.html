@@ -1,29 +1,223 @@
-<div style="margin-left: 30px; padding-top: 50px;" class="my-3">
-    <h2>Stock Entry</h2>
-    <br/>  
-    <form #stockEntry = "ngForm" (ngSubmit) = "onClickSubmit(stockEntry.value)" >
-        <table>
-            <tr>
-                <td>
-                    <label>Plant</label>
-                </td>
-                <td>
-                    <input type = "text" name = "Plant" placeholder = "Plant" ngModel>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label>Storage Location</label>
-                </td>
-                <td>
-                    <input type = "text" name = "location" placeholder = "Storage Location" ngModel>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </td>
-            </tr>
-        </table>       
-    </form>
- </div>
+ <div class="container">    
+    <div class="card">
+        <div class="card-header">
+            <h3>Stock Entry</h3>
+        </div>    
+        <div class="card-body">
+            <form novalidate (ngSubmit)="onSubmit()" [formGroup]="stockEntryForm">                
+                <div class="form-group row mb-2">
+                    <label class="col-md-2 col-form-label" for="plantId">Plant</label>
+                    <div class="col-md-8">
+                        <input class="form-control"
+                               id="plantId" type = "text" placeholder = "Plant" 
+                               formControlName="plant"
+                               [ngClass]="{'is-invalid': (stockEntryForm.get('plant').touched ||
+                                                          stockEntryForm.get('plant').dirty) &&
+                                                          !stockEntryForm.get('plant').valid }" />
+                        <span class="invalid-feedback">
+                            <span *ngIf="stockEntryForm.get('plant').errors?.['required']">
+                                Please enter plant
+                            </span>
+                        </span> 
+                    </div>           
+                </div>
+                
+                <div class="form-group row mb-2">
+                    <label class="col-md-2 col-form-label" for="locationId">Storage location</label>
+                    <div class="col-md-8">
+                        <input class="form-control"
+                               id="locationId" type = "text" placeholder = "Storage location" 
+                               formControlName="location"
+                               [ngClass]="{'is-invalid': (stockEntryForm.get('location').touched ||
+                                                          stockEntryForm.get('location').dirty) &&
+                                                          !stockEntryForm.get('location').valid }" />
+                        <span class="invalid-feedback">
+                            <span *ngIf="stockEntryForm.get('location').errors?.['required']">
+                                Please enter storage location
+                            </span>
+                        </span> 
+                    </div>           
+                </div> 
+                <div *ngIf="stockEntryNext1">
+                    <div formGroupName="stockEntryGrp1">
+                        <div class="form-group row mb-2">
+                            <label class="col-md-2 col-form-label"
+                                   for="labelId">Label</label>
+                            <div class="col-md-8">
+                              <input class="form-control"
+                                     id="labelId"
+                                     type="text"
+                                     placeholder="Label"
+                                     formControlName="label"
+                                     [ngClass]="{'is-invalid': (stockEntryForm.get('stockEntryGrp1.label').touched ||
+                                                                stockEntryForm.get('stockEntryGrp1.label').dirty) &&
+                                                                !stockEntryForm.get('stockEntryGrp1.label').valid }" />
+                              <span class="invalid-feedback">
+                                <span *ngIf="stockEntryForm.get('stockEntryGrp1.label').errors?.['required']">
+                                    Please enter label
+                                </span>
+                              </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-2">
+                            <label class="col-md-2 col-form-label"
+                                   for="rackTypeId">Rack type</label>
+                            <div class="col-md-8">
+                              <input class="form-control"
+                                     id="rackTypeId"
+                                     type="text"
+                                     placeholder="Rack type"
+                                     formControlName="rackType"
+                                     [ngClass]="{'is-invalid': (stockEntryForm.get('stockEntryGrp1.rackType').touched ||
+                                                                stockEntryForm.get('stockEntryGrp1.rackType').dirty) &&
+                                                                !stockEntryForm.get('stockEntryGrp1.rackType').valid }" />
+                              <span class="invalid-feedback">
+                                <span *ngIf="stockEntryForm.get('stockEntryGrp1.rackType').errors?.['required']">
+                                    Please enter rack type
+                                </span>
+                              </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-2">
+                            <label class="col-md-2 col-form-label"
+                                   for="rackId">Rack id</label>
+                            <div class="col-md-8">
+                              <input class="form-control"
+                                     id="rackId"
+                                     type="text"
+                                     placeholder="Rack id"
+                                     formControlName="rackId"
+                                     [ngClass]="{'is-invalid': (stockEntryForm.get('stockEntryGrp1.rackId').touched ||
+                                                                stockEntryForm.get('stockEntryGrp1.rackId').dirty) &&
+                                                                !stockEntryForm.get('stockEntryGrp1.rackId').valid }" />
+                              <span class="invalid-feedback">
+                                <span *ngIf="stockEntryForm.get('stockEntryGrp1.rackId').errors?.['required']">
+                                    Please enter rack id
+                                </span>
+                              </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-2">
+                            <label class="col-md-2 col-form-label"
+                                   for="binId">Bin</label>
+                            <div class="col-md-8">
+                              <input class="form-control"
+                                     id="binId"
+                                     type="text"
+                                     placeholder="Bin"
+                                     formControlName="bin"
+                                     [ngClass]="{'is-invalid': (stockEntryForm.get('stockEntryGrp1.bin').touched ||
+                                                                stockEntryForm.get('stockEntryGrp1.bin').dirty) &&
+                                                                !stockEntryForm.get('stockEntryGrp1.bin').valid }" />
+                              <span class="invalid-feedback">
+                                <span *ngIf="stockEntryForm.get('stockEntryGrp1.bin').errors?.['required']">
+                                    Please enter bin
+                                </span>
+                              </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="stockEntryNext2">
+                    <div formGroupName="stockEntryGrp2">
+                        <div class="form-group row mb-2">
+                            <label class="col-md-2 col-form-label"
+                                   for="materialId">Material</label>
+                            <div class="col-md-8">
+                              <input class="form-control"
+                                     id="materialId"
+                                     type="text"
+                                     placeholder="Material"
+                                     formControlName="material"
+                                     [ngClass]="{'is-invalid': (stockEntryForm.get('stockEntryGrp2.material').touched ||
+                                                                stockEntryForm.get('stockEntryGrp2.material').dirty) &&
+                                                                !stockEntryForm.get('stockEntryGrp2.material').valid }" />
+                              <span class="invalid-feedback">
+                                <span *ngIf="stockEntryForm.get('stockEntryGrp2.material').errors?.['required']">
+                                    Please enter material
+                                </span>
+                              </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-2">
+                            <label class="col-md-2 col-form-label"
+                                   for="qtyId">Qty</label>
+                            <div class="col-md-8">
+                              <input class="form-control"
+                                     id="qtyId"
+                                     type="number"
+                                     placeholder="Qty"
+                                     formControlName="qty" min="1" max="9999999"
+                                     [ngClass]="{'is-invalid': (stockEntryForm.get('stockEntryGrp2.qty').touched ||
+                                                                stockEntryForm.get('stockEntryGrp2.qty').dirty) &&
+                                                                !stockEntryForm.get('stockEntryGrp2.qty').valid }" />
+                              <span class="invalid-feedback">
+                                <span *ngIf="stockEntryForm.get('stockEntryGrp2.qty').errors?.['required']">
+                                    Please enter qty
+                                </span>
+                              </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-2">
+                            <label class="col-md-2 col-form-label"
+                                   for="statusId">Status</label>
+                            <div class="col-md-8">
+                                <select class="form-control"
+                                        id="statusId"
+                                        formControlName="status">
+                                    <option value=""
+                                            disabled
+                                            selected
+                                            hidden>Select a status...</option>
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+                                    <option value="Q">Q</option>        
+                                </select>
+                              <span class="invalid-feedback">
+                                <span *ngIf="stockEntryForm.get('stockEntryGrp2.qty').errors?.['required']">
+                                    Please enter qty
+                                </span>
+                              </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="form-group row mb-2">
+                    <div class="offset-md-2 col-md-4">
+                      <button *ngIf="stockEntryNext3" class="btn btn-primary mr-3"
+                              type="submit"
+                              style="width:80px"
+                              [title]="stockEntryForm.valid ? 'Save your entered data' : 'Disabled until the form data is valid'"
+                              [disabled]="!stockEntryForm.valid">
+                        Submit
+                      </button>
+                      <button id="next1" *ngIf="!stockEntryNext1" style="margin-left: 10px;" class="btn btn-outline-secondary"
+                              type="button"
+                              (click)="onNext1()">
+                        Next Details
+                      </button> 
+                      <button id="next2" *ngIf="stockEntryNext1" style="margin-left: 10px;" class="btn btn-outline-secondary"
+                              type="button"
+                              (click)="onNext2()" [disabled]="stockEntryNext3">
+                        Next Details
+                      </button> 
+                      <button style="margin-left: 10px;" class="btn btn-primary mr-3"
+                              type="button"
+                              (click)="onCancel()">
+                        Cancel
+                      </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

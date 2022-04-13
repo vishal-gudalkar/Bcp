@@ -10,7 +10,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './header/component/header.component';
 import { MenuComponent } from 'src/app/menu/menu.component';
 import { DashboardModule } from './dashboard/dashboard.module';
-//import { FormsModule } from '@angular/forms';
+import { StockEntryService } from './dashboard/components/transactions/services/stockEntry.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -26,10 +27,10 @@ import { DashboardModule } from './dashboard/dashboard.module';
     ButtonModule,
     PanelMenuModule,
     BrowserAnimationsModule,
-    DashboardModule
-    //FormsModule
+    DashboardModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [StockEntryService],
   bootstrap: [AppComponent ]
 })
 export class AppModule { }
