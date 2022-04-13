@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StockEntry } from '../../models/stockEntry';
 import { Router } from '@angular/router';
 import { StockEntryService } from '../../services/stockEntry.service';
@@ -52,7 +52,7 @@ export class T001S01StockEntryComponent implements OnInit {
           } 
         })
       })
-      //fetch label id code to do 
+      
       plantControl.clearValidators();
       locationControl.clearValidators();
     }
