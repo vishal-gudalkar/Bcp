@@ -24,11 +24,16 @@ import { ProductionMovementsComponent } from './dashboard/components/reports/com
 import { OpenOrdersComponent } from './dashboard/components/reports/components/open-orders/open-orders.component';
 import { DeliveriesComponent } from './dashboard/components/reports/components/deliveries/deliveries.component';
 import { PackingListComponent } from './dashboard/components/reports/components/packing-list/packing-list.component';
-
+import { OktaAuthGuard, OktaCallbackComponent } from '@okta/okta-angular';
 const routes: Routes = [
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  {
+    path: 'login/callback',
+    component: OktaCallbackComponent,
+  },
   //{ path: 'login', loadChildren: () => import('./login/login.module').then(m=> m.LoginModule)  },
   { path: 'login', component: LoginComponent },
-  { path: 'dashboard', component: DashboardComponent, children: [
+  { path: 'dashboard', component: DashboardComponent,canActivate: [ OktaAuthGuard ], children: [
     { path: '', component: MenuComponent },
     { path: 'transactions/stockentry', component: T001S01StockEntryComponent },
     { path: 'transactions/stockremoval', component: T002S01StockRemovalComponent },
