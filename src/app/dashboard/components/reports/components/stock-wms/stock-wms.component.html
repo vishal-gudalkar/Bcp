@@ -34,25 +34,25 @@
                     </div>
                   </div>
                   <div class="form-group col-5">
-                    <label for="serialNr">SERIAL NR</label>
+                    <label for="serialNr">Serial Nr</label>
                     <div class="col-xs-2">
                         <input type="text" [(ngModel)]="stockWmsSrch.serialNr" name="serialNr" class="form-control"/>
                     </div>
                   </div>
                   <div class="form-group col-5">
-                    <label for="batchNr">BATCH NR</label>
+                    <label for="batchNr">Batch Nr</label>
                     <div class="col-xs-2">
                         <input type="text" [(ngModel)]="stockWmsSrch.batchNr" name="batchNr" class="form-control"/>
                     </div>
                   </div>
                   <div class="form-group col-5">
-                    <label for="delivery">DELIVERY</label>
+                    <label for="delivery">Delivery</label>
                     <div class="col-xs-2">
                         <input type="text" [(ngModel)]="stockWmsSrch.delivery" name="delivery" class="form-control"/>
                     </div>
                   </div>
                   <div class="form-group col-5">
-                    <label for="matType">Material type</label>
+                    <label for="matType">Material Type</label>
                     <div class="col-xs-2">
                         <input type="text" [(ngModel)]="stockWmsSrch.matType" name="matType" class="form-control"/>
                     </div>
@@ -64,15 +64,15 @@
                             <input type="radio" value="N" [(ngModel)]="stockWmsSrch.chckQty" name="chckQty"/>
                            Negative Stock
                         </label>
-                        <label class="radio-inline">
+                        <label style="margin-left: 10px;" class="radio-inline">
                             <input type="radio" value="Z" [(ngModel)]="stockWmsSrch.chckQty" name="chckQty"/>
                            Zero Stock
                         </label>
-                        <label class="radio-inline">
+                        <label style="margin-left: 10px;" class="radio-inline">
                             <input type="radio" value="P" [(ngModel)]="stockWmsSrch.chckQty" name="chckQty"/>
                            Positive Stock
                         </label>
-                        <label class="radio-inline">
+                        <label style="margin-left: 10px;" class="radio-inline">
                             <input type="radio" value="A" [(ngModel)]="stockWmsSrch.chckQty" name="chckQty" [checked]="true"/>
                            All Stock
                         </label>
@@ -80,7 +80,7 @@
                    </div>
                   <div class="text-center">
                        <button class="btn btn-primary mr-3 btn-space" (click)="GetStockWmsReport()">Search</button>
-                        <button class="btn btn-secondary btn-space" (click)="Back()">Back</button>
+                       <button style="margin-left: 10px;" class="btn btn-secondary btn-space" (click)="Back()">Back</button>
                   </div>
               </div>
             </div>
@@ -92,7 +92,7 @@
     </div>
 
 <div>
-    <div style="float: right;"><button class="btn btn-primary" (click)="exportexcel()"><i class="fa fa-download"></i>Export to Excel</button></div>
+    <div style="float: right;"><button style="margin-bottom: 10px;" class="btn btn-primary" (click)="exportexcel()"><i class="fa fa-download"></i>Export to Excel</button></div>
 <table class="table table-bordered table-responsive-md table-striped text-center"  id="excel-table">
 <thead>
     <tr>
