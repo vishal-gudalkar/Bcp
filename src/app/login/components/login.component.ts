@@ -12,6 +12,8 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+
+  isAuthenticated: boolean = false;
   constructor(private router: Router, private authService: AuthService, public authStateService: OktaAuthStateService, @Inject(OKTA_AUTH) private oktaAuth: OktaAuth) { 
     
   }
@@ -27,7 +29,15 @@ export class LoginComponent implements OnInit {
   }
 
   async login() {
+    this.authStateService.authState$.subscribe(res => {
+      this.isAuthenticated = res.isAuthenticated;
+    })
+    if(this.isAuthenticated){
+      await this.oktaAuth.signOut();
+    }
+    else{
     await this.oktaAuth.signInWithRedirect({ originalUri: '/dashboard' });
+    }
   }
 
   async logout() {
