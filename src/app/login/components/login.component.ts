@@ -9,15 +9,35 @@ import { AuthService } from '../services/auth.service';
 })
 export class LoginComponent implements OnInit {
 
-  //userName: string = "";
-  constructor(private router: Router, private authService: AuthService) { }
+
+  isAuthenticated: boolean = false;
+  constructor(private router: Router, private authService: AuthService, public authStateService: OktaAuthStateService, @Inject(OKTA_AUTH) private oktaAuth: OktaAuth) { 
+    
+  }
 
   ngOnInit(): void {
   }
 
   processLogin(userName: string): void{
     this.authService.userName.next(userName);
-    this.router.navigate(['/dashboard/']);
+    //this.router.navigate(['/dashboard/']);
+    this.router.navigate(['/login/callback']);
+  }
+
+  async login() {
+    this.authStateService.authState$.subscribe(res => {
+      this.isAuthenticated = res.isAuthenticated;
+    })
+    if(this.isAuthenticated){
+      await this.oktaAuth.signOut();
+    }
+    else{
+    await this.oktaAuth.signInWithRedirect({ originalUri: '/dashboard' });
+    }
+  }
+
+  async logout() {
+    await this.oktaAuth.signOut();
   }
 
 }
