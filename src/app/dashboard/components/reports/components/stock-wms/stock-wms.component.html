@@ -1,1 +1,147 @@
-<p>stock-wms works!</p>
+
+<div class="container">    
+    <div class="card">
+        <div class="card-header">
+            <h3>Stock Wms Report</h3>
+        </div>    
+        <div class="card-body">
+            <form role="form" #form="ngForm" >
+              <div class="card-body">
+                <div class="row">
+                  <div class="form-group col-5">
+                    <label for="bin">Bin</label>
+                    <div class="col-xs-2">
+                    <input type="text" [(ngModel)]="stockWmsSrch.bin" name="bin" class="form-control"/>
+                    </div>
+               
+                   </div>
+                  <div class="form-group col-5">
+                    <label for="labelNr">Label Nr</label>
+                    <div class="col-xs-2">
+                        <input type="text" [(ngModel)]="stockWmsSrch.labelNr" name="labelNr" class="form-control"/>
+                    </div>
+                  </div>
+                  <div class="form-group col-5">
+                    <label for="rackId">Rack ID</label>
+                    <div class="col-xs-2">
+                        <input type="text" [(ngModel)]="stockWmsSrch.rackId" name="rackId" class="form-control"/>
+                    </div>
+                  </div>
+                  <div class="form-group col-5">
+                    <label for="sapLoc">Sap Loc</label>
+                    <div class="col-xs-2">
+                        <input type="text" [(ngModel)]="stockWmsSrch.sapLoc" name="sapLoc" class="form-control"/>
+                    </div>
+                  </div>
+                  <div class="form-group col-5">
+                    <label for="serialNr">SERIAL NR</label>
+                    <div class="col-xs-2">
+                        <input type="text" [(ngModel)]="stockWmsSrch.serialNr" name="serialNr" class="form-control"/>
+                    </div>
+                  </div>
+                  <div class="form-group col-5">
+                    <label for="batchNr">BATCH NR</label>
+                    <div class="col-xs-2">
+                        <input type="text" [(ngModel)]="stockWmsSrch.batchNr" name="batchNr" class="form-control"/>
+                    </div>
+                  </div>
+                  <div class="form-group col-5">
+                    <label for="delivery">DELIVERY</label>
+                    <div class="col-xs-2">
+                        <input type="text" [(ngModel)]="stockWmsSrch.delivery" name="delivery" class="form-control"/>
+                    </div>
+                  </div>
+                  <div class="form-group col-5">
+                    <label for="matType">Material type</label>
+                    <div class="col-xs-2">
+                        <input type="text" [(ngModel)]="stockWmsSrch.matType" name="matType" class="form-control"/>
+                    </div>
+                  </div>
+                  <div class="form-group col-5">
+                    <label></label>
+                    <div class="col-lg-12">
+                        <label class="radio-inline">
+                            <input type="radio" value="N" [(ngModel)]="stockWmsSrch.chckQty" name="chckQty"/>
+                           Negative Stock
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" value="Z" [(ngModel)]="stockWmsSrch.chckQty" name="chckQty"/>
+                           Zero Stock
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" value="P" [(ngModel)]="stockWmsSrch.chckQty" name="chckQty"/>
+                           Positive Stock
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" value="A" [(ngModel)]="stockWmsSrch.chckQty" name="chckQty" [checked]="true"/>
+                           All Stock
+                        </label>
+                    </div>
+                   </div>
+                  <div class="text-center">
+                       <button class="btn btn-primary mr-3 btn-space" (click)="GetStockWmsReport()">Search</button>
+                        <button class="btn btn-secondary btn-space" (click)="Back()">Back</button>
+                  </div>
+              </div>
+            </div>
+              <!-- /.card-body -->
+            </form>
+  
+        </div>
+      </div>
+    </div>
+
+<div>
+    <div style="float: right;"><button class="btn btn-primary" (click)="exportexcel()"><i class="fa fa-download"></i>Export to Excel</button></div>
+<table class="table table-bordered table-responsive-md table-striped text-center"  id="excel-table">
+<thead>
+    <tr>
+      <th>BIN</th>
+      <th>PROD_ADD</th>
+      <th>LABEL_NR</th>
+      <th>RACK_TYPE</th>
+      <th>RACK_ID</th>
+      <th>SERIAL_NR</th>
+      <th>BATCH_NR</th>
+      <th>MAT TYPE</th>
+      <th>PRODUCT</th>
+      <th>PID</th>
+      <th>CONTENT_STATUS</th>
+      <th>QTY</th>
+      <th>PROD_DSC2</th>
+      <th>SAP_LOC</th>
+      <th>MARKET</th>
+      <th>PLANT</th>
+      <th>DELIVERY</th>
+      <th>DRY_DATE</th>
+    </tr>
+</thead>
+<tbody>
+    <tr *ngFor="let u of stockWms">
+        <td>{{u.bin}}</td>
+        <td>{{u.prodAdd}}</td>
+        <td>{{u.labelNr}}</td>
+        <td>{{u.rackType}}</td>
+        <td>{{u.rackId}}</td>
+        <td>{{u.serialNr}}</td>
+        <td>{{u.batchNr}}</td>
+        <td>{{u.matType}}</td>
+        <td>{{u.product}}</td>
+        <td>{{u.prNetWeight}}</td>
+        <td>{{u.contentStatus}}</td>
+        <td>{{u.qty}}</td>
+        <td>{{u.prodDsc2}}</td>
+        <td>{{u.sapLoc}}</td>
+        <td>{{u.market}}</td>
+        <td>{{u.plant}}</td>
+        <td>{{u.delivery}}</td>
+        <td>{{u.dryDate}}</td>
+    </tr>
+    <tr>  
+        <td colspan="10"></td>  
+        <td colspan="1"><b>Total:</b> </td>  
+        <td colspan="1"><b>{{total}}</b> </td>  
+    </tr>  
+</tbody>
+  </table>
+</div>

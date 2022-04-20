@@ -11,10 +11,8 @@
                 </div>
                 <br/>
 				<div class="form-group">
-					<!-- <input type="text" #userName placeholder="user name"> -->
-					<!-- <button style="font-weight: bold;" pButton type="submit" (click)="login()" label="Sign in" class="btn float-end login_btn"> </button> -->
-                    <button style="font-weight: bold;" *ngIf="!(authStateService.authState$ | async)?.isAuthenticated" pButton type="submit" (click)="login()" label="Sign in" class="btn float-end login_btn"> </button>
-					<button style="font-weight: bold;" *ngIf="(authStateService.authState$ | async)?.isAuthenticated" pButton type="submit" (click)="logout()" label="Log Out" class="btn float-end login_btn"> </button>
+					<input type="text" #userName placeholder="user name">
+                    <button style="font-weight: bold;" pButton type="submit" (click)="processLogin(userName.value)" label="Sign in" class="btn float-end login_btn"> </button>
                 </div>			
 			</div>			
 		</div>

@@ -1,10 +1,6 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { OktaAuthStateService, OKTA_AUTH } from '@okta/okta-angular';
-import { AuthState, OktaAuth } from '@okta/okta-auth-js';
-import { filter, map, Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
-
 
 @Component({
   selector: 'app-login',
@@ -12,26 +8,16 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  constructor(private router: Router, private authService: AuthService, public authStateService: OktaAuthStateService, @Inject(OKTA_AUTH) private oktaAuth: OktaAuth) { 
-    
-  }
+
+  //userName: string = "";
+  constructor(private router: Router, private authService: AuthService) { }
 
   ngOnInit(): void {
-    
   }
 
   processLogin(userName: string): void{
     this.authService.userName.next(userName);
-    //this.router.navigate(['/dashboard/']);
-    this.router.navigate(['/login/callback']);
-  }
-
-  async login() {
-    await this.oktaAuth.signInWithRedirect({ originalUri: '/dashboard' });
-  }
-
-  async logout() {
-    await this.oktaAuth.signOut();
+    this.router.navigate(['/dashboard/']);
   }
 
 }

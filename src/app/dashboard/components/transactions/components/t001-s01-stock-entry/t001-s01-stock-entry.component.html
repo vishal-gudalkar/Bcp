@@ -1,3 +1,5 @@
+
+ 
  <div class="container">    
     <div class="card">
         <div class="card-header">
@@ -5,7 +7,7 @@
         </div>    
         <div class="card-body">
             <form novalidate (ngSubmit)="onSubmit()" [formGroup]="stockEntryForm">                
-                <div class="form-group row mb-2">
+                <!-- <div class="form-group row mb-2">
                     <label class="col-md-2 col-form-label" for="plantId">Plant</label>
                     <div class="col-md-8">
                         <input class="form-control"
@@ -20,26 +22,26 @@
                             </span>
                         </span> 
                     </div>           
-                </div>
+                </div> -->
                 
                 <div class="form-group row mb-2">
-                    <label class="col-md-2 col-form-label" for="locationId">Storage location</label>
+                    <label class="col-md-2 col-form-label" for="storageLocationId">Storage location</label>
                     <div class="col-md-8">
-                        <input class="form-control"
-                               id="locationId" type = "text" placeholder = "Storage location" 
-                               formControlName="location"
-                               [ngClass]="{'is-invalid': (stockEntryForm.get('location').touched ||
-                                                          stockEntryForm.get('location').dirty) &&
-                                                          !stockEntryForm.get('location').valid }" />
+                      <select class="form-control" formControlName="sapLoc" id="storageLocationId"  [ngClass]="{'is-invalid': (stockEntryForm.get('sapLoc').touched ||stockEntryForm.get('sapLoc').dirty) && !stockEntryForm.get('sapLoc').valid }">
+                        <option value="" disabled selected hidden>Select  Storage Location...</option>
+                        <option *ngFor="let locations of storageLocations"  [ngValue]="locations.storagelocation">
+                          {{locations.storagelocation}}
+                        </option>
+                      </select>
                         <span class="invalid-feedback">
-                            <span *ngIf="stockEntryForm.get('location').errors?.['required']">
-                                Please enter storage location
+                            <span *ngIf="stockEntryForm.get('sapLoc').errors?.['required']">
+                                Please select storage location
                             </span>
                         </span> 
                     </div>           
                 </div> 
-                <div *ngIf="stockEntryNext1">
-                    <div formGroupName="stockEntryGrp1">
+                <div>
+                    <div>
                         <div class="form-group row mb-2">
                             <label class="col-md-2 col-form-label"
                                    for="labelId">Label</label>
@@ -48,12 +50,12 @@
                                      id="labelId"
                                      type="text"
                                      placeholder="Label"
-                                     formControlName="label"
-                                     [ngClass]="{'is-invalid': (stockEntryForm.get('stockEntryGrp1.label').touched ||
-                                                                stockEntryForm.get('stockEntryGrp1.label').dirty) &&
-                                                                !stockEntryForm.get('stockEntryGrp1.label').valid }" />
+                                     formControlName="labelNr"
+                                     [ngClass]="{'is-invalid': (stockEntryForm.get('labelNr').touched ||
+                                                                stockEntryForm.get('labelNr').dirty) &&
+                                                                !stockEntryForm.get('labelNr').valid }" [readonly]="true"/>
                               <span class="invalid-feedback">
-                                <span *ngIf="stockEntryForm.get('stockEntryGrp1.label').errors?.['required']">
+                                <span *ngIf="stockEntryForm.get('labelNr').errors?.['required']">
                                     Please enter label
                                 </span>
                               </span>
@@ -64,17 +66,16 @@
                             <label class="col-md-2 col-form-label"
                                    for="rackTypeId">Rack type</label>
                             <div class="col-md-8">
-                              <input class="form-control"
-                                     id="rackTypeId"
-                                     type="text"
-                                     placeholder="Rack type"
-                                     formControlName="rackType"
-                                     [ngClass]="{'is-invalid': (stockEntryForm.get('stockEntryGrp1.rackType').touched ||
-                                                                stockEntryForm.get('stockEntryGrp1.rackType').dirty) &&
-                                                                !stockEntryForm.get('stockEntryGrp1.rackType').valid }" />
+                             
+                              <select class="form-control" formControlName="rackType" id="rackTypeId"  [ngClass]="{'is-invalid': (stockEntryForm.get('rackType').touched ||stockEntryForm.get('rackType').dirty) && !stockEntryForm.get('rackType').valid }">
+                                <option value="" disabled selected hidden>Select  Rack Type...</option>
+                                <option *ngFor="let types of rackTypes" [ngValue]="types.rackType">
+                                  {{types.rackType}}
+                                </option>
+                              </select>
                               <span class="invalid-feedback">
-                                <span *ngIf="stockEntryForm.get('stockEntryGrp1.rackType').errors?.['required']">
-                                    Please enter rack type
+                                <span *ngIf="stockEntryForm.get('rackType').errors?.['required']">
+                                    Please select rack type
                                 </span>
                               </span>
                             </div>
@@ -89,11 +90,11 @@
                                      type="text"
                                      placeholder="Rack id"
                                      formControlName="rackId"
-                                     [ngClass]="{'is-invalid': (stockEntryForm.get('stockEntryGrp1.rackId').touched ||
-                                                                stockEntryForm.get('stockEntryGrp1.rackId').dirty) &&
-                                                                !stockEntryForm.get('stockEntryGrp1.rackId').valid }" />
+                                     [ngClass]="{'is-invalid': (stockEntryForm.get('rackId').touched ||
+                                                                stockEntryForm.get('rackId').dirty) &&
+                                                                !stockEntryForm.get('rackId').valid }" />
                               <span class="invalid-feedback">
-                                <span *ngIf="stockEntryForm.get('stockEntryGrp1.rackId').errors?.['required']">
+                                <span *ngIf="stockEntryForm.get('rackId').errors?.['required']">
                                     Please enter rack id
                                 </span>
                               </span>
@@ -109,11 +110,11 @@
                                      type="text"
                                      placeholder="Bin"
                                      formControlName="bin"
-                                     [ngClass]="{'is-invalid': (stockEntryForm.get('stockEntryGrp1.bin').touched ||
-                                                                stockEntryForm.get('stockEntryGrp1.bin').dirty) &&
-                                                                !stockEntryForm.get('stockEntryGrp1.bin').valid }" />
+                                     [ngClass]="{'is-invalid': (stockEntryForm.get('bin').touched ||
+                                                                stockEntryForm.get('bin').dirty) &&
+                                                                !stockEntryForm.get('bin').valid }" />
                               <span class="invalid-feedback">
-                                <span *ngIf="stockEntryForm.get('stockEntryGrp1.bin').errors?.['required']">
+                                <span *ngIf="stockEntryForm.get('bin').errors?.['required']">
                                     Please enter bin
                                 </span>
                               </span>
@@ -122,8 +123,8 @@
                     </div>
                 </div>
 
-                <div *ngIf="stockEntryNext2">
-                    <div formGroupName="stockEntryGrp2">
+                <div>
+                    <div>
                         <div class="form-group row mb-2">
                             <label class="col-md-2 col-form-label"
                                    for="materialId">Material</label>
@@ -132,12 +133,12 @@
                                      id="materialId"
                                      type="text"
                                      placeholder="Material"
-                                     formControlName="material"
-                                     [ngClass]="{'is-invalid': (stockEntryForm.get('stockEntryGrp2.material').touched ||
-                                                                stockEntryForm.get('stockEntryGrp2.material').dirty) &&
-                                                                !stockEntryForm.get('stockEntryGrp2.material').valid }" />
+                                     formControlName="product"
+                                     [ngClass]="{'is-invalid': (stockEntryForm.get('product').touched ||
+                                                                stockEntryForm.get('product').dirty) &&
+                                                                !stockEntryForm.get('product').valid }" />
                               <span class="invalid-feedback">
-                                <span *ngIf="stockEntryForm.get('stockEntryGrp2.material').errors?.['required']">
+                                <span *ngIf="stockEntryForm.get('product').errors?.['required']">
                                     Please enter material
                                 </span>
                               </span>
@@ -153,11 +154,11 @@
                                      type="number"
                                      placeholder="Qty"
                                      formControlName="qty" min="1" max="9999999"
-                                     [ngClass]="{'is-invalid': (stockEntryForm.get('stockEntryGrp2.qty').touched ||
-                                                                stockEntryForm.get('stockEntryGrp2.qty').dirty) &&
-                                                                !stockEntryForm.get('stockEntryGrp2.qty').valid }" />
+                                     [ngClass]="{'is-invalid': (stockEntryForm.get('qty').touched ||
+                                                                stockEntryForm.get('qty').dirty) &&
+                                                                !stockEntryForm.get('qty').valid }" />
                               <span class="invalid-feedback">
-                                <span *ngIf="stockEntryForm.get('stockEntryGrp2.qty').errors?.['required']">
+                                <span *ngIf="stockEntryForm.get('qty').errors?.['required']">
                                     Please enter qty
                                 </span>
                               </span>
@@ -170,18 +171,18 @@
                             <div class="col-md-8">
                                 <select class="form-control"
                                         id="statusId"
-                                        formControlName="status">
+                                        formControlName="contentStatus" [ngClass]="{'is-invalid': (stockEntryForm.get('contentStatus').touched ||stockEntryForm.get('contentStatus').dirty) && !stockEntryForm.get('contentStatus').valid }">
                                     <option value=""
                                             disabled
                                             selected
-                                            hidden>Select a status...</option>
+                                            hidden>Select a status...</option>    
                                     <option value="A">A</option>
                                     <option value="B">B</option>
                                     <option value="Q">Q</option>        
                                 </select>
                               <span class="invalid-feedback">
-                                <span *ngIf="stockEntryForm.get('stockEntryGrp2.qty').errors?.['required']">
-                                    Please enter qty
+                                <span *ngIf="stockEntryForm.get('contentStatus').errors?.['required']">
+                                    Please select status
                                 </span>
                               </span>
                             </div>
@@ -192,27 +193,22 @@
                 
                 <div class="form-group row mb-2">
                     <div class="offset-md-2 col-md-4">
-                      <button *ngIf="stockEntryNext3" class="btn btn-primary mr-3"
+                      <button  class="btn btn-primary mr-3"
                               type="submit"
                               style="width:80px"
                               [title]="stockEntryForm.valid ? 'Save your entered data' : 'Disabled until the form data is valid'"
                               [disabled]="!stockEntryForm.valid">
                         Submit
                       </button>
-                      <button id="next1" *ngIf="!stockEntryNext1" style="margin-left: 10px;" class="btn btn-outline-secondary"
-                              type="button"
-                              (click)="onNext1()">
-                        Next Details
-                      </button> 
-                      <button id="next2" *ngIf="stockEntryNext1" style="margin-left: 10px;" class="btn btn-outline-secondary"
-                              type="button"
-                              (click)="onNext2()" [disabled]="stockEntryNext3">
-                        Next Details
-                      </button> 
                       <button style="margin-left: 10px;" class="btn btn-primary mr-3"
                               type="button"
                               (click)="onCancel()">
                         Cancel
+                      </button>
+                        <button style="margin-left: 10px;" class="btn btn-primary mr-3"
+                              type="button"
+                              (click)="AddNew()">
+                        Add New
                       </button>
                     </div>
                 </div>
