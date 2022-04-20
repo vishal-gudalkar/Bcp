@@ -3,7 +3,7 @@
 @import "~primeng/resources/themes/nova/theme.css";
 @import "~primeng/resources/primeng.min.css";
 @import '~primeicons/primeicons.css';
-
+@import '~ngx-toastr/toastr.css'; 
 .container-login{
 height: 100%;
 align-content: center;
@@ -26,3 +26,6 @@ div.card {
      margin-top: 10px
 }
 
+#toast-container > div {
+    opacity:1;
+}

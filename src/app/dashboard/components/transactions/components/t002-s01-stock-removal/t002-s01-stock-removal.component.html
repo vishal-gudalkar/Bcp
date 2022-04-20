@@ -1,1 +1,154 @@
-<p>t002-s01-stock-removal works!</p>
+<div class="container">    
+    <div class="card">
+        <div class="card-header">
+            <h3>Stock Removal</h3>
+        </div>    
+        <div class="card-body">
+            <form novalidate (ngSubmit)="onSubmit()" [formGroup]="stockRemovalForm">                
+                <div class="form-group row mb-2">
+                    <label class="col-md-2 col-form-label" for="plantId">Plant</label>
+                    <div class="col-md-8">
+                        <input class="form-control"
+                               id="plantId" type = "text" placeholder = "Plant" 
+                               formControlName="plant"
+                               [ngClass]="{'is-invalid': (stockRemovalForm.get('plant').touched ||
+                                                          stockRemovalForm.get('plant').dirty) &&
+                                                          !stockRemovalForm.get('plant').valid }" />
+                        <span class="invalid-feedback">
+                            <span *ngIf="stockRemovalForm.get('plant').errors?.['required']">
+                                Please enter plant
+                            </span>
+                        </span> 
+                    </div>           
+                </div>
+                <div class="form-group row mb-2">
+                    <label class="col-md-2 col-form-label" for="storageLocationId">Storage location</label>
+                    <div class="col-md-8">
+                      <select class="form-control" formControlName="sapLoc" id="storageLocationId"  [ngClass]="{'is-invalid': (stockRemovalForm.get('sapLoc').touched ||stockRemovalForm.get('sapLoc').dirty) && !stockRemovalForm.get('sapLoc').valid }">
+                        <option value="" disabled selected hidden>Select  Storage Location...</option>
+                        <option *ngFor="let locations of storageLocations"  [ngValue]="locations.storagelocation">
+                          {{locations.storagelocation}}
+                        </option>
+                      </select>
+                        <span class="invalid-feedback">
+                            <span *ngIf="stockRemovalForm.get('sapLoc').errors?.['required']">
+                                Please select storage location
+                            </span>
+                        </span> 
+                    </div>           
+                </div> 
+                <div>
+                    <div>
+                        <div class="form-group row mb-2">
+                            <label class="col-md-2 col-form-label"
+                                   for="labelId">Delivery Note</label>
+                            <div class="col-md-8">
+                              <input class="form-control"
+                                     id="labelId"
+                                     type="text"
+                                     placeholder="Delivery Note"
+                                     formControlName="delivery"
+                                     [ngClass]="{'is-invalid': (stockRemovalForm.get('delivery').touched ||
+                                                                stockRemovalForm.get('delivery').dirty) &&
+                                                                !stockRemovalForm.get('delivery').valid }" />
+                              <span class="invalid-feedback">
+                                <span *ngIf="stockRemovalForm.get('delivery').errors?.['required']">
+                                    Please enter Delivery Note
+                                </span>
+                              </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <div class="form-group row mb-2">
+                            <label class="col-md-2 col-form-label"
+                                   for="labelId">Label</label>
+                            <div class="col-md-8">
+                              <input class="form-control"
+                                     id="labelId"
+                                     type="text"
+                                     placeholder="Label"
+                                     formControlName="labelNr"
+                                     [ngClass]="{'is-invalid': (stockRemovalForm.get('labelNr').touched ||
+                                                                stockRemovalForm.get('labelNr').dirty) &&
+                                                                !stockRemovalForm.get('labelNr').valid }" />
+                              <span class="invalid-feedback">
+                                <span *ngIf="stockRemovalForm.get('labelNr').errors?.['required']">
+                                    Please enter label
+                                </span>
+                              </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <div class="form-group row mb-2">
+                            <label class="col-md-2 col-form-label"
+                                   for="materialId">Material</label>
+                            <div class="col-md-8">
+                              <input class="form-control"
+                                     id="materialId"
+                                     type="text"
+                                     placeholder="Material"
+                                     formControlName="product"
+                                     [ngClass]="{'is-invalid': (stockRemovalForm.get('product').touched ||
+                                                                stockRemovalForm.get('product').dirty) &&
+                                                                !stockRemovalForm.get('product').valid }" />
+                              <span class="invalid-feedback">
+                                <span *ngIf="stockRemovalForm.get('product').errors?.['required']">
+                                    Please enter material
+                                </span>
+                              </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-2">
+                            <label class="col-md-2 col-form-label"
+                                   for="qtyId">Qty</label>
+                            <div class="col-md-8">
+                              <input class="form-control"
+                                     id="qtyId"
+                                     type="number"
+                                     placeholder="Qty"
+                                     formControlName="qty" min="1" max="9999999"
+                                     [ngClass]="{'is-invalid': (stockRemovalForm.get('qty').touched ||
+                                                                stockRemovalForm.get('qty').dirty) &&
+                                                                !stockRemovalForm.get('qty').valid }" />
+                              <span class="invalid-feedback">
+                                <span *ngIf="stockRemovalForm.get('qty').errors?.['required']">
+                                    Please enter qty
+                                </span>
+                              </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row mb-2">
+                    <div class="offset-md-2 col-md-4">
+                      <button  class="btn btn-primary mr-3"
+                              type="submit"
+                              style="width:80px"
+                              [title]="stockRemovalForm.valid ? 'Save your entered data' : 'Disabled until the form data is valid'"
+                              [disabled]="!stockRemovalForm.valid">
+                        Submit
+                      </button>
+                      <button style="margin-left: 10px;" class="btn btn-primary mr-3"
+                              type="button"
+                              (click)="onCancel()">
+                        Cancel
+                      </button>
+                        <button style="margin-left: 10px;" class="btn btn-primary mr-3"
+                              type="button"
+                              (click)="AddNew()">
+                        Add New
+                      </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

@@ -26,6 +26,7 @@ import config from './app.config';
 import { ConfirmModalComponent, ConfirmModal } from './modal/confirm.component';
 import { APP_BASE_HREF } from '@angular/common';
 import { AuthInterceptor } from './services/auth.interceptor';
+import { ToastrModule } from 'ngx-toastr';
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,7 +44,8 @@ import { AuthInterceptor } from './services/auth.interceptor';
     DashboardModule,
     HttpClientModule,
     FormsModule,
-    OktaAuthModule
+    OktaAuthModule,
+    ToastrModule.forRoot()
   ],
   providers: [StockEntryService,StockWmsReportService,
     { 

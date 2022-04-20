@@ -14,7 +14,8 @@ export class StockWmsComponent implements OnInit {
   stockWmsSrch:StockWms=new StockWms();
   
   fileName= 'StockWms.xlsx';
-  total=0;    
+  total=0; 
+  disable=false;   
   constructor(private stockWmsReportService: StockWmsReportService,private router: Router,) { }
 
   ngOnInit(): void {
@@ -43,6 +44,7 @@ export class StockWmsComponent implements OnInit {
       if(this.stockWms!=null && this.stockWms.length>0){
         this.findSumQuantity(this.stockWms); 
       }
+      this.disable=this.stockWms.length==0?false :true;
     })
   }
 
