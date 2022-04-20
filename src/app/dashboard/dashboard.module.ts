@@ -22,7 +22,7 @@ import { OpenOrdersComponent } from './components/reports/components/open-orders
 import { DeliveriesComponent } from './components/reports/components/deliveries/deliveries.component';
 import { PackingListComponent } from './components/reports/components/packing-list/packing-list.component';
 import { ProductionMovementsComponent } from './components/reports/components/production-movements/production-movements.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 export const DashboardRoutes = [
   { path: '', component: MenuComponent },
@@ -56,7 +56,8 @@ export const DashboardRoutes = [
   ],
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
   exports: [ReactiveFormsModule]
 })

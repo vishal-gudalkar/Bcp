@@ -3,6 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StockEntry } from '../../models/stockEntry';
 import { Router } from '@angular/router';
 import { StockEntryService } from '../../services/stockEntry.service';
+import { RackTypes } from '../../models/RackTypes';
+import { StorageLocation } from '../../models/StorageLocation';
+import { convertActionBinding } from '@angular/compiler/src/compiler_util/expression_converter';
 
 @Component({
   selector: 'app-t001-s01-stock-entry',
@@ -12,114 +15,71 @@ import { StockEntryService } from '../../services/stockEntry.service';
 export class T001S01StockEntryComponent implements OnInit {
   stockEntryForm: FormGroup;
   stockEntry: StockEntry = new StockEntry();
-  stockEntryNext1: boolean = false;
-  stockEntryNext2: boolean = false;
-  stockEntryNext3: boolean = false;
+  rackTypes : RackTypes[];
+  storageLocations : StorageLocation[];
+  submitted = false;
   constructor(private router: Router, private fb: FormBuilder, private stockEntryService: StockEntryService) { }
 
   ngOnInit(): void {
     this.stockEntryForm = this.fb.group({
-      plant: ['', [Validators.required]],
-      location: ['', [Validators.required]],
-      stockEntryGrp1: this.fb.group({
-        label: ['', [Validators.required]],
-        rackType: ['', [Validators.required]],
-        rackId: ['', [Validators.required]],
-        bin: ['', [Validators.required]]
-      }),
-      stockEntryGrp2: this.fb.group({
-        material: ['', [Validators.required]],
-        qty: ['', [Validators.required]],
-        status: ['', Validators.required]
-      })
+     // plant: ['', [Validators.required]],
+      sapLoc: ['', [Validators.required]],
+      labelNr: ['', [Validators.required]],
+      rackType: ['', [Validators.required]],
+      rackId: ['', [Validators.required]],
+      bin: ['', [Validators.required]],
+      product: ['', [Validators.required]],
+      qty: ['', [Validators.required]],
+      contentStatus: ['', Validators.required]
     });
+    this.GetRackTypes();
+    this.GetStorageLocations();
+    this.GetLabelValue();
   }
 
   onSubmit(){
-
-  }
-
-  onNext1(){
-    const plantControl = this.stockEntryForm.get('plant');
-    const locationControl = this.stockEntryForm.get('location');
-    
-    if(plantControl.valid && locationControl.valid){
-      this.stockEntryNext1 = true;      
-      this.stockEntryService.getLabelValue().subscribe(res => {
-        this.stockEntryForm.patchValue({
-          stockEntryGrp1:{
-            label: res
-          } 
-        })
-      })
-      
-      plantControl.clearValidators();
-      locationControl.clearValidators();
-    }
-    else if(!plantControl.valid){
-      plantControl.setValidators(Validators.required);
-    }
-    else if(!locationControl.valid){
-      locationControl.setValidators(Validators.required);
-    }
-    plantControl.updateValueAndValidity();
-    locationControl.updateValueAndValidity();
-  }
-
-  onNext2(){
-    if(!this.stockEntryNext2){
-      const rackTypeControl = this.stockEntryForm.get('stockEntryGrp1.rackType');
-      const rackIdControl = this.stockEntryForm.get('stockEntryGrp1.rackId');
-      const binControl = this.stockEntryForm.get('stockEntryGrp1.bin');
-      if(rackTypeControl.valid && rackIdControl.valid && binControl.valid){
-        this.stockEntryNext2 = true;
-        //fetch label id code to do 
-        rackTypeControl.clearValidators();
-        rackIdControl.clearValidators();
-        binControl.clearValidators();
-      }
-      else if(!rackTypeControl.valid){
-        rackTypeControl.setValidators(Validators.required);
-      }
-      else if(!rackIdControl.valid){
-        rackIdControl.setValidators(Validators.required);
-      }
-      else if(!binControl.valid){
-        binControl.setValidators(Validators.required);
-      }
-      rackTypeControl.updateValueAndValidity();
-      rackIdControl.updateValueAndValidity();
-      binControl.updateValueAndValidity();
-    }
-    else{
-      const materialControl = this.stockEntryForm.get('stockEntryGrp2.material');
-      const qtyControl = this.stockEntryForm.get('stockEntryGrp2.qty');
-      const statusControl = this.stockEntryForm.get('stockEntryGrp2.status');
-      if(materialControl.valid && qtyControl.valid && statusControl.valid){
-        this.stockEntryNext3 = true;
-        //fetch label id code to do 
-        materialControl.clearValidators();
-        qtyControl.clearValidators();
-        statusControl.clearValidators();
-      }
-      else if(!materialControl.valid){
-        materialControl.setValidators(Validators.required);
-      }
-      else if(!qtyControl.valid){
-        qtyControl.setValidators(Validators.required);
-      }
-      else if(!statusControl.valid){
-        statusControl.setValidators(Validators.required);
-      }
-      materialControl.updateValueAndValidity();
-      qtyControl.updateValueAndValidity();
-      statusControl.updateValueAndValidity();
-    }
+    this.submitted = true;
+    this.stockEntryForm.get('labelNr').setValue(this.stockEntryForm.get('labelNr').value.toString());
+    this.stockEntryService.saveStockEntry(this.stockEntryForm.value).subscribe((data) => {
+      alert('Saved successfully !');
+      window.location.reload();
+      //this.router.navigate(['transactions/stockentry']);
+      //this.ngOnInit();
+    });
   }
 
   onCancel(){
     this.router.navigate(['/dashboard']);
   }
+
+  GetRackTypes(){
+    this.stockEntryService.getRackTypes().subscribe(data => {
+      this.rackTypes=data;
+      console.log(this.rackTypes);
+    })
+  }
+
+  GetStorageLocations(){
+    this.stockEntryService.getStorageLocations().subscribe(data => {
+      this.storageLocations=data;
+      console.log(this.storageLocations);
+    })
+  }
+
+  GetLabelValue(){
+    this.stockEntryService.getLabelValue().subscribe(res => {
+      console.log(res);
+      this.stockEntryForm.patchValue({
+          labelNr: res,
+      })
+    });
+  }
+  
+
+ AddNew(){
+  //this.router.navigate(['/transactions/T001_S01_StockEntry']);
+  window.location.reload();
+ }
 
 }
 
