@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { StockEntryService } from '../../services/stockEntry.service';
 import { RackTypes } from '../../models/RackTypes';
 import { StorageLocation } from '../../models/StorageLocation';
-import { convertActionBinding } from '@angular/compiler/src/compiler_util/expression_converter';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-t001-s01-stock-entry',
@@ -18,7 +18,7 @@ export class T001S01StockEntryComponent implements OnInit {
   rackTypes : RackTypes[];
   storageLocations : StorageLocation[];
   submitted = false;
-  constructor(private router: Router, private fb: FormBuilder, private stockEntryService: StockEntryService) { }
+  constructor(private router: Router, private fb: FormBuilder, private stockEntryService: StockEntryService,private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.stockEntryForm = this.fb.group({
@@ -41,8 +41,10 @@ export class T001S01StockEntryComponent implements OnInit {
     this.submitted = true;
     this.stockEntryForm.get('labelNr').setValue(this.stockEntryForm.get('labelNr').value.toString());
     this.stockEntryService.saveStockEntry(this.stockEntryForm.value).subscribe((data) => {
-      alert('Saved successfully !');
-      window.location.reload();
+      this.toastr.success("Stock Entry Saved Successfully");
+      setTimeout(function () {
+        window.location.reload();
+      }, 1000);
       //this.router.navigate(['transactions/stockentry']);
       //this.ngOnInit();
     });

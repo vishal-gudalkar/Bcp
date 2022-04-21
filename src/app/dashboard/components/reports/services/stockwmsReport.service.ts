@@ -14,5 +14,9 @@ import { Observable } from 'rxjs';
     getStockWmsReport(searchStockWms:any): Observable<any[]> {
         return this.http.post<any[]>(environment.apiUrl + 'StockWmsReport/GetStockWmsReportDetails',searchStockWms);
     }
+
+    getStockWmsExcelExportData(): Observable<any[]> {
+      return this.http.get<any[]>(environment.apiUrl + 'StockWmsReport/StockWmsExcelExportData');
+    }
   }
   
