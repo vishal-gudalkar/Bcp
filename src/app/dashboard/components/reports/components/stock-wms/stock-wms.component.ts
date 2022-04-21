@@ -3,7 +3,9 @@ import { StockWms } from '../../models/stockWms';
 import { StockWmsReportService } from '../../services/stockwmsReport.service';
 import * as XLSX from 'xlsx';
 import { Router } from '@angular/router';
-
+import { CommonReportService } from '../../services/commonReport.service';
+import { List } from 'linqts';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-stock-wms',
   templateUrl: './stock-wms.component.html',
@@ -11,31 +13,19 @@ import { Router } from '@angular/router';
 })
 export class StockWmsComponent implements OnInit {
   stockWms : StockWms[];
+  stockWmsExportList : StockWms[];
   stockWmsSrch:StockWms=new StockWms();
   
   fileName= 'StockWms.xlsx';
-  total=0; 
-  disable=false;   
-  constructor(private stockWmsReportService: StockWmsReportService,private router: Router,) { }
+  total=0;  
+  constructor(private stockWmsReportService: StockWmsReportService,private router: Router,private commonService:CommonReportService,private toastr: ToastrService) { }
 
   ngOnInit(): void {
    this.GetStockWmsReport();
    this.stockWmsSrch.chckQty="A";
   }
 
-  exportexcel(): void{
-    /* pass here the table id */
-    let element = document.getElementById('excel-table');
-    const ws: XLSX.WorkSheet =XLSX.utils.table_to_sheet(element);
- 
-    /* generate workbook and add the worksheet */
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
- 
-    /* save to file */  
-    XLSX.writeFile(wb, this.fileName);
- 
-  }
+  
 
   GetStockWmsReport(){
     this.stockWmsReportService.getStockWmsReport(this.stockWmsSrch).subscribe(data => {
@@ -44,7 +34,23 @@ export class StockWmsComponent implements OnInit {
       if(this.stockWms!=null && this.stockWms.length>0){
         this.findSumQuantity(this.stockWms); 
       }
-      this.disable=this.stockWms.length==0?false :true;
+    })
+  }
+
+  exportexcel(): void{
+    this.stockWmsReportService.getStockWmsExcelExportData().subscribe(data => {
+      this.stockWmsExportList=data;
+      if(this.stockWmsExportList!=null && this.stockWmsExportList.length>0){
+        var stockwmsData = new List<any>(this.stockWmsExportList).Select((x: StockWms) => (
+          {
+            'BIN': x.bin, 'PROD_ADD	': x.prodAdd, 'LABEL_NR': x.labelNr, 'RACK_TYPE': x.rackType, 'RACK_ID': x.rackId, 'SERIAL_NR': x.serialNr, 'BATCH_NR': x.batchNr, 'MAT TYPE': x.matType, 'PRODUCT': x.product,
+            'PID'	:x.prNetWeight,'CONTENT_STATUS':x.contentStatus,'QTY':x.qty,'PROD_DSC2'	:x.prodDsc2,'SAP_LOC':x.sapLoc,	'MARKET':x.market,'PLANT':x.plant,'DELIVERY':x.delivery,'DRY_DATE':x.dryDate
+          })).ToArray();
+          this.commonService.exportExcel(stockwmsData, "StockWmsReport");
+      }else{
+        this.toastr.info("No Records For Excel to Export");
+      }
+     
     })
   }
 
