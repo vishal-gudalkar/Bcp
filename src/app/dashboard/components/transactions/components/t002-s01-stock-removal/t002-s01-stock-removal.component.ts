@@ -6,6 +6,7 @@ import { StockEntry } from '../../models/stockEntry';
 import { StorageLocation } from '../../models/StorageLocation';
 import { StockEntryService } from '../../services/stockEntry.service';
 import { StockRemovalService } from '../../services/stockRemoval.service';
+import { plantConfig } from 'src/app/dashboard/config/commonConfig';
 
 @Component({
   selector: 'app-t002-s01-stock-removal',
@@ -21,7 +22,7 @@ export class T002S01StockRemovalComponent implements OnInit {
 
   ngOnInit(): void {
     this.stockRemovalForm = this.fb.group({
-      plant: ['', [Validators.required]],
+      plant: ['', ''],
       sapLoc: ['', [Validators.required]],
       labelNr: ['', [Validators.required]],
       product: ['', [Validators.required]],
@@ -33,6 +34,7 @@ export class T002S01StockRemovalComponent implements OnInit {
 
   onSubmit(){
     this.submitted = true;
+    this.stockRemovalForm.get('plant').setValue(plantConfig.plant);
     this.stockRemovalService.saveUpdateStockRemoval(this.stockRemovalForm.value).subscribe(data => {
       this.toastr.success("Stock Removal Saved Successfully");
       setTimeout(function () {

@@ -21,13 +21,14 @@ import {
   OktaAuthModule,
 } from '@okta/okta-angular';
 import { environment } from '../environments/environment';
-
 import config from './app.config';
 import { ConfirmModalComponent, ConfirmModal } from './modal/confirm.component';
 import { APP_BASE_HREF } from '@angular/common';
 import { AuthInterceptor } from './services/auth.interceptor';
 import { ToastrModule } from 'ngx-toastr';
 import { CommonReportService } from './dashboard/components/reports/services/commonReport.service';
+import {TableModule} from 'primeng/table';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,7 +47,8 @@ import { CommonReportService } from './dashboard/components/reports/services/com
     HttpClientModule,
     FormsModule,
     OktaAuthModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    TableModule
   ],
   providers: [StockEntryService,StockWmsReportService,CommonReportService,
     { 

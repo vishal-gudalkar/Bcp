@@ -6,22 +6,6 @@
         <div class="card-body">
             <form novalidate (ngSubmit)="onSubmit()" [formGroup]="stockRemovalForm">                
                 <div class="form-group row mb-2">
-                    <label class="col-md-2 col-form-label" for="plantId">Plant</label>
-                    <div class="col-md-8">
-                        <input class="form-control"
-                               id="plantId" type = "text" placeholder = "Plant" 
-                               formControlName="plant"
-                               [ngClass]="{'is-invalid': (stockRemovalForm.get('plant').touched ||
-                                                          stockRemovalForm.get('plant').dirty) &&
-                                                          !stockRemovalForm.get('plant').valid }" />
-                        <span class="invalid-feedback">
-                            <span *ngIf="stockRemovalForm.get('plant').errors?.['required']">
-                                Please enter plant
-                            </span>
-                        </span> 
-                    </div>           
-                </div>
-                <div class="form-group row mb-2">
                     <label class="col-md-2 col-form-label" for="storageLocationId">Storage location</label>
                     <div class="col-md-8">
                       <select class="form-control" formControlName="sapLoc" id="storageLocationId"  [ngClass]="{'is-invalid': (stockRemovalForm.get('sapLoc').touched ||stockRemovalForm.get('sapLoc').dirty) && !stockRemovalForm.get('sapLoc').valid }">
