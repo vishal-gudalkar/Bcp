@@ -81,6 +81,7 @@
                   <div class="text-center">
                        <button class="btn btn-primary mr-3 btn-space" (click)="GetStockWmsReport()">Search</button>
                        <button style="margin-left: 10px;" class="btn btn-secondary btn-space" (click)="Back()">Back</button>
+                       <button style="margin-left: 10px;" class="btn btn-warning btn-space" (click)="Reset(form)">Reset</button>
                   </div>
               </div>
             </div>
@@ -93,55 +94,61 @@
 
 <div>
 <div style="float: right;"><button style="margin-bottom: 10px;" class="btn btn-primary" (click)="exportexcel()"><i class="fa fa-download"></i>Export to Excel</button></div>
-<table class="table table-bordered table-responsive-md table-striped text-center"  id="excel-table">
-<thead>
+<p-table #dt  [value]="stockWms" loadingIcon="fa fa-spinner" id="dataTable" [rows]="10"  [paginator]="true"  sortMode="multiple"  (onPage)="paginate($event)" (onSort)="paginate($event)" 
+[tableStyle]="{'table-layout':'auto','font-size':'13px','text-align':'center'}" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,15,20]">
+
+<ng-template pTemplate="header">
     <tr>
-      <th>BIN</th>
-      <th>PROD_ADD</th>
-      <th>LABEL_NR</th>
-      <th>RACK_TYPE</th>
-      <th>RACK_ID</th>
-      <th>SERIAL_NR</th>
-      <th>BATCH_NR</th>
-      <th>MAT TYPE</th>
-      <th>PRODUCT</th>
-      <th>PID</th>
-      <th>CONTENT_STATUS</th>
-      <th>QTY</th>
-      <th>PROD_DSC2</th>
-      <th>SAP_LOC</th>
-      <th>MARKET</th>
-      <th>PLANT</th>
-      <th>DELIVERY</th>
-      <th>DRY_DATE</th>
+      <th pSortableColumn="bin">BIN<p-sortIcon></p-sortIcon></th>
+      <th pSortableColumn="prodAdd">PROD_ADD<p-sortIcon></p-sortIcon></th>
+      <th pSortableColumn="labelNr">LABEL_NR<p-sortIcon></p-sortIcon></th>
+      <th pSortableColumn="rackType">RACK_TYPE<p-sortIcon></p-sortIcon></th>
+      <th pSortableColumn="rackId">RACK_ID<p-sortIcon></p-sortIcon></th>
+      <th pSortableColumn="serialNr">SERIAL_NR<p-sortIcon></p-sortIcon></th>
+      <th pSortableColumn="batchNr">BATCH_NR<p-sortIcon></p-sortIcon></th>
+      <th pSortableColumn="matType">MAT_TYPE<p-sortIcon></p-sortIcon></th>
+      <th pSortableColumn="product">PRODUCT<p-sortIcon></p-sortIcon></th>
+      <th pSortableColumn="prNetWeight">PID<p-sortIcon></p-sortIcon></th>
+      <th pSortableColumn="contentStatus">CONTENT_STATUS<p-sortIcon></p-sortIcon></th>
+      <th pSortableColumn="qty">QTY<p-sortIcon></p-sortIcon></th>
+      <th pSortableColumn="prodDsc2">PROD_DSC2<p-sortIcon></p-sortIcon></th>
+      <th pSortableColumn="sapLoc">SAP_LOC<p-sortIcon></p-sortIcon></th>
+      <th pSortableColumn="market">MARKET<p-sortIcon></p-sortIcon></th>
+      <th pSortableColumn="plant">PLANT<p-sortIcon></p-sortIcon></th>
+      <th pSortableColumn="delivery">DELIVERY<p-sortIcon></p-sortIcon></th>
+      <th pSortableColumn="dryDate">DRY_DATE<p-sortIcon></p-sortIcon></th>
     </tr>
-</thead>
-<tbody>
-    <tr *ngFor="let u of stockWms">
-        <td>{{u.bin}}</td>
-        <td>{{u.prodAdd}}</td>
-        <td>{{u.labelNr}}</td>
-        <td>{{u.rackType}}</td>
-        <td>{{u.rackId}}</td>
-        <td>{{u.serialNr}}</td>
-        <td>{{u.batchNr}}</td>
-        <td>{{u.matType}}</td>
-        <td>{{u.product}}</td>
-        <td>{{u.prNetWeight}}</td>
-        <td>{{u.contentStatus}}</td>
-        <td>{{u.qty}}</td>
-        <td>{{u.prodDsc2}}</td>
-        <td>{{u.sapLoc}}</td>
-        <td>{{u.market}}</td>
-        <td>{{u.plant}}</td>
-        <td>{{u.delivery}}</td>
-        <td>{{u.dryDate}}</td>
-    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-stockWmDt> 
+    <tr>
+      <td>{{stockWmDt.bin}}</td>
+      <td>{{stockWmDt.prodAdd}}</td>
+      <td>{{stockWmDt.labelNr}}</td>
+      <td>{{stockWmDt.rackType}}</td>
+      <td>{{stockWmDt.rackId}}</td>
+      <td>{{stockWmDt.serialNr}}</td>
+      <td>{{stockWmDt.batchNr}}</td>
+      <td>{{stockWmDt.matType}}</td>
+      <td>{{stockWmDt.product}}</td>
+      <td>{{stockWmDt.prNetWeight}}</td>
+      <td>{{stockWmDt.contentStatus}}</td>
+      <td>{{stockWmDt.qty}}</td>
+      <td>{{stockWmDt.prodDsc2}}</td>
+      <td>{{stockWmDt.sapLoc}}</td>
+      <td>{{stockWmDt.market}}</td>
+      <td>{{stockWmDt.plant}}</td>
+      <td>{{stockWmDt.delivery}}</td>
+      <td>{{stockWmDt.dryDate}}</td>
+  </tr>
+  </ng-template>
+  <ng-template pTemplate="footer">
     <tr>  
-        <td colspan="10"></td>  
-        <td colspan="1"><b>Total:</b> </td>  
-        <td colspan="1"><b>{{total}}</b> </td>  
-    </tr>  
-</tbody>
-  </table>
+      <td colspan="10"></td>  
+      <td colspan="1"><b>Total:</b> </td>  
+      <td colspan="1" ><span></span><b>{{total}}</b> </td>  
+  </tr>  
+  </ng-template>
+</p-table>
+
+
 </div>

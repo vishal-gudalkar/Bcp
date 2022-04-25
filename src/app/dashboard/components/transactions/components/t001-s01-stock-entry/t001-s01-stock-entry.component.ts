@@ -6,7 +6,7 @@ import { StockEntryService } from '../../services/stockEntry.service';
 import { RackTypes } from '../../models/RackTypes';
 import { StorageLocation } from '../../models/StorageLocation';
 import { ToastrService } from 'ngx-toastr';
-
+import { plantConfig } from 'src/app/dashboard/config/commonConfig';
 @Component({
   selector: 'app-t001-s01-stock-entry',
   templateUrl: './t001-s01-stock-entry.component.html',
@@ -22,7 +22,7 @@ export class T001S01StockEntryComponent implements OnInit {
 
   ngOnInit(): void {
     this.stockEntryForm = this.fb.group({
-     // plant: ['', [Validators.required]],
+      plant: ['', ''],
       sapLoc: ['', [Validators.required]],
       labelNr: ['', [Validators.required]],
       rackType: ['', [Validators.required]],
@@ -39,6 +39,7 @@ export class T001S01StockEntryComponent implements OnInit {
 
   onSubmit(){
     this.submitted = true;
+    this.stockEntryForm.get('plant').setValue(plantConfig.plant);
     this.stockEntryForm.get('labelNr').setValue(this.stockEntryForm.get('labelNr').value.toString());
     this.stockEntryService.saveStockEntry(this.stockEntryForm.value).subscribe((data) => {
       this.toastr.success("Stock Entry Saved Successfully");

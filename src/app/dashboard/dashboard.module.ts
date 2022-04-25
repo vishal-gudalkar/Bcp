@@ -23,6 +23,8 @@ import { DeliveriesComponent } from './components/reports/components/deliveries/
 import { PackingListComponent } from './components/reports/components/packing-list/packing-list.component';
 import { ProductionMovementsComponent } from './components/reports/components/production-movements/production-movements.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TableModule } from 'primeng/table';
+
 
 export const DashboardRoutes = [
   { path: '', component: MenuComponent },
@@ -57,7 +59,8 @@ export const DashboardRoutes = [
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    TableModule
   ],
   exports: [ReactiveFormsModule]
 })
