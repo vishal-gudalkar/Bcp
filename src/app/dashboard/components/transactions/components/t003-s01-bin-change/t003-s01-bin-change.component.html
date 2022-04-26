@@ -1,1 +1,84 @@
-<p>t003-s01-bin-change works!</p>
+<div class="container">    
+    <div class="card">
+        <div class="card-header">
+            <h3>Bin Change</h3>
+        </div>    
+        <div class="card-body">
+            <form novalidate (ngSubmit)="onSubmit()" [formGroup]="binChangeForm">                
+
+                <div>
+                    <div>
+                        <div class="form-group row mb-2">
+                            <label class="col-md-2 col-form-label"
+                                   for="labelId">Label</label>
+                            <div class="col-md-8">
+                              <input class="form-control"
+                                     id="labelId"
+                                     type="text"
+                                     placeholder="Label"
+                                     formControlName="labelNr" />
+                             
+                            </div>
+                        </div>
+                    </div>
+                </div>
+      
+                <div class="form-group row mb-2">
+                    <label class="col-md-2 col-form-label"
+                           for="rackId">Rack id</label>
+                    <div class="col-md-8">
+                      <input class="form-control"
+                             id="rackId"
+                             type="text"
+                             placeholder="Rack id"
+                             formControlName="rackId" [(ngModel)]="stockEntry.rackId" />
+               
+                    </div>
+                        <div class="text-danger" *ngIf="isAny" style="padding-left: 197px">Please enter Label or Rack Id</div>
+                </div>
+
+                <div class="form-group row mb-2">
+                    <label class="col-md-2 col-form-label"
+                           for="binId">Bin</label>
+                    <div class="col-md-8">
+                      <input class="form-control"
+                             id="binId"
+                             type="text"
+                             placeholder="Bin"
+                             formControlName="bin"    
+                             [ngClass]="{'is-invalid': (binChangeForm.get('bin').touched ||
+                             binChangeForm.get('bin').dirty) &&
+                             !binChangeForm.get('bin').valid }"/>
+                             <span class="invalid-feedback">
+                                <span *ngIf="binChangeForm.get('bin').errors?.['required']">
+                                    Please enter Bin
+                                </span>
+                              </span>
+                    </div>
+                </div>
+                <div class="form-group row mb-2">
+                    <div class="offset-md-2 col-md-4">
+                      <button  class="btn btn-primary mr-3"
+                              type="submit"
+                              style="width:80px"
+                              [title]="binChangeForm.valid ? 'Save your entered data' : 'Disabled until the form data is valid'"
+                              [disabled]="!binChangeForm.valid">
+                        Submit
+                      </button>
+                      <button style="margin-left: 10px;" class="btn btn-primary mr-3"
+                              type="button"
+                              (click)="onCancel()">
+                        Cancel
+                      </button>
+                        <button style="margin-left: 10px;" class="btn btn-primary mr-3"
+                              type="button"
+                              (click)="AddNew()">
+                        Add New
+                      </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

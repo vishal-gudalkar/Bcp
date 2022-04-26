@@ -28,6 +28,7 @@ import { AuthInterceptor } from './services/auth.interceptor';
 import { ToastrModule } from 'ngx-toastr';
 import { CommonReportService } from './dashboard/components/reports/services/commonReport.service';
 import {TableModule} from 'primeng/table';
+import { changeService } from './dashboard/components/transactions/services/change.service';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,7 @@ import {TableModule} from 'primeng/table';
     ToastrModule.forRoot(),
     TableModule
   ],
-  providers: [StockEntryService,StockWmsReportService,CommonReportService,
+  providers: [StockEntryService,StockWmsReportService,CommonReportService,changeService,
     { 
       provide: OKTA_CONFIG, 
       useFactory: () => {
