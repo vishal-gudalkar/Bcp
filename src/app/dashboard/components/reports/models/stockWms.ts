@@ -21,4 +21,5 @@ export class StockWms {
   market:string;
   rackId:string;
   chckQty:string;
+  matGrp:string;
   } 
