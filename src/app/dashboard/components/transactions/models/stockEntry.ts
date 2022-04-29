@@ -9,4 +9,13 @@ export class StockEntry {
     qty:number;
     status:string;
     sapLoc:string;
-  } 
+  }
+
+  export class StockChange{
+    labelNr:string;
+    rackId:string;
+    bin:string;
+    feildChangeType:string;
+    status:string;
+    sapLoc:string;
+  }

@@ -3,7 +3,7 @@
 @import "~primeng/resources/themes/nova/theme.css";
 @import "~primeng/resources/primeng.min.css";
 @import '~primeicons/primeicons.css';
-@import '~ngx-toastr/toastr.css'; 
+@import '~ngx-toastr/toastr.css';
 .container-login{
 height: 100%;
 align-content: center;
@@ -21,7 +21,7 @@ background-color: rgba(0,0,0,0.5) !important;
 div.card-header {
     font-size: large;
 }
-   
+
 div.card {
      margin-top: 10px
 }
@@ -32,3 +32,6 @@ div.card {
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.mandatory-error-astrik {
+  color: #dc3545;
+}

@@ -15,6 +15,7 @@ import { StockWmsReportService } from './dashboard/components/reports/services/s
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SuiModalService } from '@giomamaladze/ng2-semantic-ui';
+import { NgxSpinnerModule } from 'ngx-spinner';
 import { OktaAuth } from '@okta/okta-auth-js';
 import {
   OKTA_CONFIG,
@@ -28,7 +29,9 @@ import { AuthInterceptor } from './services/auth.interceptor';
 import { ToastrModule } from 'ngx-toastr';
 import { CommonReportService } from './dashboard/components/reports/services/commonReport.service';
 import {TableModule} from 'primeng/table';
-import { changeService } from './dashboard/components/transactions/services/change.service';
+import { StockChangeService } from './dashboard/components/transactions/services/stockChange.service';
+import { LoaderInterceptor } from './interceptor/loader.interceptor';
+import { APIErrorInterceptor } from './interceptor/apierror.interceptor';
 
 @NgModule({
   declarations: [
@@ -49,11 +52,12 @@ import { changeService } from './dashboard/components/transactions/services/chan
     FormsModule,
     OktaAuthModule,
     ToastrModule.forRoot(),
-    TableModule
+    TableModule,
+    NgxSpinnerModule
   ],
-  providers: [StockEntryService,StockWmsReportService,CommonReportService,changeService,
-    { 
-      provide: OKTA_CONFIG, 
+  providers: [StockEntryService,StockWmsReportService,CommonReportService,StockChangeService,
+    {
+      provide: OKTA_CONFIG,
       useFactory: () => {
         const oktaAuth = new OktaAuth(config.oidc);
         return {
@@ -73,12 +77,14 @@ import { changeService } from './dashboard/components/transactions/services/chan
                 .onApprove(triggerLogin)
                 .onDeny(() => {});
             }
-          }  
+          }
         }
       }
     },
     { provide: APP_BASE_HREF, useValue: environment.appBaseHref },
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS,useClass: APIErrorInterceptor,multi: true},
+    { provide: HTTP_INTERCEPTORS,useClass: LoaderInterceptor, multi: true}],
   bootstrap: [AppComponent ],
   entryComponents: [ConfirmModalComponent],
 })

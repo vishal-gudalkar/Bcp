@@ -1,10 +1,10 @@
 <nav class="bg-light navbar navbar-expand-lg navbar-light">
     <div class="container-fluid">
-      
-      <a class="layout-topbar-icon" [routerLink]="['/dashboard']">        
+
+      <a class="layout-topbar-icon" [routerLink]="['/dashboard']">
         <div class="bcp">BCP</div>
       </a>
-      
+
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -17,14 +17,15 @@
           <li style="margin-top: 5px; margin-right: 20px;">
             <!--<a class="nav-link" (click)="logout()">Log Out</a>-->
             <a style="margin-top: 50px;" href="#" (click)="logout()">
-                <i class="pi pi-power-off"></i> 
+                <i class="pi pi-power-off"></i>
                 <b><span style="margin-left: 5px;">Log Out</span></b>
-            </a>   
-          </li>          
+            </a>
+          </li>
         </ul>
       </div>
     </div>
 </nav>
 <div class="my-3 mx-3">
+  <ngx-spinner>Loading...</ngx-spinner>
   <router-outlet></router-outlet>
 </div>

@@ -1,10 +1,10 @@
-<div class="container">    
+<div class="container">
     <div class="card">
         <div class="card-header">
             <h3>Bin Change</h3>
-        </div>    
+        </div>
         <div class="card-body">
-            <form novalidate (ngSubmit)="onSubmit()" [formGroup]="binChangeForm">                
+            <form novalidate (ngSubmit)="onSubmit()" [formGroup]="binChangeForm">
 
                 <div>
                     <div>
@@ -17,12 +17,12 @@
                                      type="text"
                                      placeholder="Label"
                                      formControlName="labelNr" />
-                             
+
                             </div>
                         </div>
                     </div>
                 </div>
-      
+
                 <div class="form-group row mb-2">
                     <label class="col-md-2 col-form-label"
                            for="rackId">Rack id</label>
@@ -31,10 +31,10 @@
                              id="rackId"
                              type="text"
                              placeholder="Rack id"
-                             formControlName="rackId" [(ngModel)]="stockEntry.rackId" />
-               
+                             formControlName="rackId"  />
+
                     </div>
-                        <div class="text-danger" *ngIf="isAny" style="padding-left: 197px">Please enter Label or Rack Id</div>
+
                 </div>
 
                 <div class="form-group row mb-2">
@@ -45,7 +45,7 @@
                              id="binId"
                              type="text"
                              placeholder="Bin"
-                             formControlName="bin"    
+                             formControlName="bin"
                              [ngClass]="{'is-invalid': (binChangeForm.get('bin').touched ||
                              binChangeForm.get('bin').dirty) &&
                              !binChangeForm.get('bin').valid }"/>
@@ -72,8 +72,8 @@
                       </button>
                         <button style="margin-left: 10px;" class="btn btn-primary mr-3"
                               type="button"
-                              (click)="AddNew()">
-                        Add New
+                              (click)="refreshForm()">
+                        Reset
                       </button>
                     </div>
                 </div>
